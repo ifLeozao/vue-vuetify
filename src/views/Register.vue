@@ -1,8 +1,7 @@
 <template>
   <v-form ref="form"
     v-model="valid"
-    lazy-validation
-  >
+    lazy-validation>
   <v-container>
     <v-text-field
       v-model="name"
@@ -11,17 +10,19 @@
       label="Name"
       required
     ></v-text-field>
-
     <v-text-field
       v-model="email"
       :rules="emailRules"
       label="E-mail"
-      required
-    ></v-text-field>
+      required></v-text-field>
+
     <v-row>
         <v-col cols="2">
-            <v-text-field label="CEP" @blur="getCEP" v-model="cep" type="number">
-
+            <v-text-field label="CEP"
+             @blur="getCEP" 
+             v-model="cep" 
+             hide-spin-buttons
+             v-mask="['#####-###']">
             </v-text-field>
         </v-col>
           <v-col cols="5">
@@ -53,6 +54,7 @@
       color="success"
       class="mr-4"
       @click="validate"
+      
     >
       Validate
     </v-btn>
@@ -113,10 +115,10 @@ export default {
         this.$refs.form.resetValidation()
       },
      async getCEP() {
-         if(this.cep.length ===8){
+         const cepFormatado = this.cep.replace("-", "");
+         if(cepFormatado.length === 8){
          try {
-          const response = await fetch(`http://viacep.com.br/ws/${this.cep}/json/`, 
-         );
+          const response = await fetch(`http://viacep.com.br/ws/${cepFormatado}/json/`);
           const json = await response.json();
           this.cidade = json.localidade;
           this.estado = json.uf;
