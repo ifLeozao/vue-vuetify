@@ -1,17 +1,18 @@
 <template>
   <v-app> 
     <v-app-bar app color="#546E7A" dark>
-      <v-app-bar-title> Test </v-app-bar-title>
+      <v-app-bar-title> Vue </v-app-bar-title>
       <v-spacer></v-spacer>
             <v-btn
-        v-for="link in links"
-        :key="link"
+        v-for="(link, i) in links"
+        :key="i"
         color="white"
         text
         rounded
         class="my-2"
+        :to="link.path"
       >
-        {{ link }}
+        {{ link.label }}
       </v-btn>
     </v-app-bar>
     <!-- Login -->
@@ -27,14 +28,15 @@
       no-gutters
     >
       <v-btn
-        v-for="link in links"
-        :key="link"
+        v-for="(link, i) in links"
+        :key="i"
         color="white"
         text
         rounded
         class="my-2"
+        :to="link.path"
       >
-        {{ link }}
+        {{ link.label }}
       </v-btn>
       <v-col
         class="blue-grey lighten-2 py-4 text-center white--text"
@@ -54,7 +56,19 @@ export default {
   components: {},
 
   data: () => ({
-    links: ["Home", "Login", "Cadastro", "API"],
+    links: [{
+      label: "Home",
+      path: "/",
+    },
+    {
+      label: "Login",
+      path: "login",
+    },
+    {
+      label: "About",
+      path: "about",
+    },
+    ],
   }),
   methods: {},
 };
